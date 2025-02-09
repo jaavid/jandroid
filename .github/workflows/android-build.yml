@@ -53,7 +53,7 @@ jobs:
     - name: Build Android
       run: |
         . build/envsetup.sh
-        lunch aosp_cf_x86_64_phone-userdebug
+        lunch aosp_cf_husky-userdebug
         make -j$(nproc --all)
         
     - name: Upload artifacts
