@@ -31,28 +31,29 @@ jobs:
         echo "Free space:"
         df -h
         sudo apt-get update
-        sudo apt-get install -y git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig openjdk-11-jdk-headless
+        sudo apt-get install -y git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig
         sudo apt autoremove -y
         sudo apt autoclean -y
         sudo apt clean -y
-        sudo apt-get install -y openjdk-11-jdk-headless
+        # sudo apt-get install -y openjdk-11-jdk-headless
+        sudo apt-get install -y openjdk-8-jdk
         # Create proper directory structure
-        sudo mkdir -p /usr/lib/jvm/java-11-openjdk-amd64/bin
+        # sudo mkdir -p /usr/lib/jvm/java-11-openjdk-amd64/bin
         # Create symbolic link for tools.jar
-        sudo ln -sf /usr/lib/jvm/java-11-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-11-openjdk-amd64/bin/../lib/tools.jar
-        echo "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" >> $GITHUB_ENV
-        sudo ln -sf /usr/lib/jvm/java-11-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-11-openjdk-amd64/bin/../lib/tools.jar
+        # sudo ln -sf /usr/lib/jvm/java-11-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-11-openjdk-amd64/bin/../lib/tools.jar
+        # echo "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" >> $GITHUB_ENV
+        # sudo ln -sf /usr/lib/jvm/java-11-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-11-openjdk-amd64/bin/../lib/tools.jar
         echo "Free space:"
         df -h
 
-    - name: Set JAVA_HOME
-      run: |
-        echo "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" >> $GITHUB_ENV
+    # - name: Set JAVA_HOME
+    #   run: |
+    #     echo "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" >> $GITHUB_ENV
 
     - name: Test JAVA
       run: |
         echo "JAVA_HOME is set to $JAVA_HOME"
-        ls -la "$JAVA_HOME/bin/../lib/tools.jar"
+        # ls -la "$JAVA_HOME/bin/../lib/tools.jar"
         java -version
         
     - name: Install Repo
