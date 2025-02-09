@@ -31,12 +31,17 @@ jobs:
         echo "Free space:"
         df -h
         sudo apt-get update
-        sudo apt-get install -y git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig
+        sudo apt-get install -y git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig openjdk-11-jdk-headless
         sudo apt autoremove -y
         sudo apt autoclean -y
         sudo apt clean -y
         echo "Free space:"
         df -h
+
+    - name: Set JAVA_HOME
+      run: |
+        echo "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" >> $GITHUB_ENV
+        echo "::set-env name=JAVA_HOME::/usr/lib/jvm/java-11-openjdk-amd64"
         
     - name: Install Repo
       run: |
@@ -51,6 +56,8 @@ jobs:
         repo sync -c -j8 --no-tags --no-clone-bundle --current-branch
         
     - name: Build Android
+      env:
+        JAVA_HOME: ${{ env.JAVA_HOME }}
       run: |
         . build/envsetup.sh
         lunch aosp_arm64
