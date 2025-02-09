@@ -47,7 +47,7 @@ jobs:
         
     - name: Sync Android source
       run: |
-        repo init --partial-clone -b android-15.0.0_r15 -u https://android.googlesource.com/platform/manifest
+        repo init --partial-clone -b android-8.1.0_r3 -u https://android.googlesource.com/platform/manifest
         repo sync -c -j8 --no-tags --no-clone-bundle --current-branch
         
     - name: Build Android
