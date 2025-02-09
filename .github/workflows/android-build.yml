@@ -1,0 +1,46 @@
+name: Android Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y git-core gnupg flex bison build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip
+        
+    - name: Install Repo
+      run: |
+        mkdir -p ~/bin
+        curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+        chmod a+x ~/bin/repo
+        echo "PATH=$PATH:~/bin" >> $GITHUB_PATH
+        
+    - name: Sync Android source
+      run: |
+        repo init -u https://android.googlesource.com/platform/manifest -b master
+        repo sync
+        
+    - name: Build Android
+      run: |
+        . build/envsetup.sh
+        lunch aosp_cf_x86_64_phone-userdebug
+        make -j$(nproc --all)
+        
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-image
+        path: |
+          out/target/product/aosp_cf_x86_64_phone/system.img
+          out/target/product/aosp_cf_x86_64_phone/boot.img
