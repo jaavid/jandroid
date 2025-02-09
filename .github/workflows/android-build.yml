@@ -47,13 +47,13 @@ jobs:
         
     - name: Sync Android source
       run: |
-        repo init --partial-clone -b android-8.1.0_r3 -u https://android.googlesource.com/platform/manifest
+        repo init --partial-clone -b android-security-9.0.0_r76 -u https://android.googlesource.com/platform/manifest
         repo sync -c -j8 --no-tags --no-clone-bundle --current-branch
         
     - name: Build Android
       run: |
         . build/envsetup.sh
-        lunch aosp_cf_husky-userdebug
+        lunch aosp_cf_x86_64_phone-trunk_staging-userdebug
         make -j$(nproc --all)
         
     - name: Upload artifacts
