@@ -47,6 +47,7 @@ jobs:
         
     - name: Sync Android source
       run: |
+        repo init
         repo sync -c -j8 --no-tags --no-clone-bundle --current-branch
         
     - name: Build Android
