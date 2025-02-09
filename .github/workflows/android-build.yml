@@ -41,7 +41,11 @@ jobs:
     - name: Set JAVA_HOME
       run: |
         echo "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" >> $GITHUB_ENV
-        echo "::set-env name=JAVA_HOME::/usr/lib/jvm/java-11-openjdk-amd64"
+
+    - name: Test JAVA
+      run: |
+        echo "JAVA_HOME is set to $JAVA_HOME"
+        java -version
         
     - name: Install Repo
       run: |
