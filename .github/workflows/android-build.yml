@@ -35,6 +35,12 @@ jobs:
         sudo apt autoremove -y
         sudo apt autoclean -y
         sudo apt clean -y
+        sudo apt-get install -y openjdk-11-jdk-headless
+        # Create proper directory structure
+        sudo mkdir -p /usr/lib/jvm/java-11-openjdk-amd64/bin
+        # Create symbolic link for tools.jar
+        sudo ln -sf /usr/lib/jvm/java-11-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-11-openjdk-amd64/bin/../lib/tools.jar
+        echo "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" >> $GITHUB_ENV
         sudo ln -sf /usr/lib/jvm/java-11-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-11-openjdk-amd64/bin/../lib/tools.jar
         echo "Free space:"
         df -h
