@@ -29,7 +29,7 @@ jobs:
     - name: Sync Android source
       run: |
         repo init --partial-clone -b main -u https://android.googlesource.com/platform/manifest
-        repo sync
+        repo sync -c -j8
         
     - name: Build Android
       run: |
