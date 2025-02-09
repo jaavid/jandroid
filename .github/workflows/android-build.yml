@@ -8,7 +8,7 @@ on:
 jobs:
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     
     steps:
 
@@ -32,6 +32,11 @@ jobs:
         df -h
         sudo apt-get update
         sudo apt-get install -y git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig
+        sudo apt autoremove -y
+        sudo apt autoclean -y
+        sudo apt clean -y
+        echo "Free space:"
+        df -h
         
     - name: Install Repo
       run: |
@@ -42,8 +47,8 @@ jobs:
         
     - name: Sync Android source
       run: |
-        repo init --partial-clone -b main -u https://android.googlesource.com/platform/manifest
-        repo sync -c -j8
+        repo init --partial-clone -b android-15.0.0_r15 -u https://android.googlesource.com/platform/manifest
+        repo sync -c -j8 --no-tags --no-clone-bundle --current-branch
         
     - name: Build Android
       run: |
