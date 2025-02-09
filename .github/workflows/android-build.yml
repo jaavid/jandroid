@@ -67,6 +67,8 @@ jobs:
       env:
         JAVA_HOME: ${{ env.JAVA_HOME }}
       run: |
+        sudo rm /usr/bin/python
+        sudo ln -s /usr/bin/python3 /usr/bin/python
         . build/envsetup.sh
         lunch aosp_arm64
         make -j$(nproc --all)
