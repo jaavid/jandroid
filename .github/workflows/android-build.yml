@@ -47,18 +47,23 @@ jobs:
         
     - name: Sync Android source
       run: |
-        repo init -u default.xml
+        repo init --partial-clone -b android-8.0.0_r51 -u https://android.googlesource.com/platform/manifest -m default.xml
         repo sync -c -j8 --no-tags --no-clone-bundle --current-branch
         
     - name: Build Android
       run: |
         . build/envsetup.sh
         lunch aosp_arm64
-        m
+        make -j$(nproc --all)
         
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: android-image
         path: |
-          out/target/product/*
+          out/target/product/aosp_cf_x86_64_phone/system.img
+          out/target/product/aosp_cf_x86_64_phone/boot.img
+          out/target/product/aosp_arm64/system.img
+          out/target/product/aosp_arm64/boot.img
+          out/target/product/*/*.img
+          
