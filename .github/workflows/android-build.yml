@@ -52,13 +52,12 @@ jobs:
     - name: Build Android
       run: |
         . build/envsetup.sh
-        lunch aosp_cf_x86_64_phone-trunk_staging-userdebug
-        make -j$(nproc --all)
+        lunch aosp_arm64
+        m
         
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: android-image
         path: |
-          out/target/product/aosp_cf_x86_64_phone/system.img
-          out/target/product/aosp_cf_x86_64_phone/boot.img
+          out/target/product/*
