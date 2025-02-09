@@ -35,6 +35,7 @@ jobs:
         sudo apt autoremove -y
         sudo apt autoclean -y
         sudo apt clean -y
+        sudo ln -sf /usr/lib/jvm/java-11-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-11-openjdk-amd64/bin/../lib/tools.jar
         echo "Free space:"
         df -h
 
@@ -45,6 +46,7 @@ jobs:
     - name: Test JAVA
       run: |
         echo "JAVA_HOME is set to $JAVA_HOME"
+        ls -la "$JAVA_HOME/bin/../lib/tools.jar"
         java -version
         
     - name: Install Repo
