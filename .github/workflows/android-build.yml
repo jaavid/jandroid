@@ -26,7 +26,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-
     - name: Install dependencies
       run: |
         echo "Free space:"
@@ -54,10 +53,6 @@ jobs:
         echo "\nJAVA_HOME path:"
         echo $JAVA_HOME
 
-    # - uses: actions/setup-python@v5
-    #   with:
-    #     python-version: '3.13'
-
     - name: Install Repo
       run: |
         mkdir -p ~/bin
@@ -74,11 +69,10 @@ jobs:
       env:
         JAVA_HOME: ${{ env.JAVA_HOME }}
       run: |
-        # sudo pip2 install virtualenv
         virtualenv --python=$(which python2.7) venv
-        # python2.7 -m pip install virtualenv
-        # python2.7 -m venv venv
         source venv/bin/activate
+        rm -rf .repo/project-objects/
+        sudo rm -rf /var/log/*
         . build/envsetup.sh
         lunch aosp_arm64
         make -j$(nproc --all)
