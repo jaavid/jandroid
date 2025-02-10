@@ -33,7 +33,8 @@ jobs:
         df -h
         sudo apt-get update
         sudo apt-get install -y git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig
-        sudo apt-get install -y python2.7 python2.7-dev
+        sudo add-apt-repository universe -y
+        sudo apt-get install -y python2.7 python2.7-dev virtualenv
         sudo apt autoremove -y
         sudo apt autoclean -y
         sudo apt clean -y
@@ -73,8 +74,10 @@ jobs:
       env:
         JAVA_HOME: ${{ env.JAVA_HOME }}
       run: |
-        python2.7 -m pip install virtualenv
-        python2.7 -m venv venv
+        # sudo pip2 install virtualenv
+        virtualenv --python=$(which python2.7) venv
+        # python2.7 -m pip install virtualenv
+        # python2.7 -m venv venv
         source venv/bin/activate
         . build/envsetup.sh
         lunch aosp_arm64
