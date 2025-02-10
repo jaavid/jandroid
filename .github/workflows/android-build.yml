@@ -73,6 +73,7 @@ jobs:
       env:
         JAVA_HOME: ${{ env.JAVA_HOME }}
       run: |
+        python2.7 -m pip install virtualenv
         python2.7 -m venv venv
         source venv/bin/activate
         . build/envsetup.sh
